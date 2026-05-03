@@ -97,37 +97,37 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 2.1 Create App
 
-- [ ] **P0:** Create Vite React app.
-- [ ] **P0:** Use TypeScript if comfortable; otherwise use JavaScript for speed.
-- [ ] **P0:** Start local dev server.
-- [ ] **P0:** Confirm app opens in browser.
+- [x] **P0:** Create Vite React app.
+- [x] **P0:** Use TypeScript if comfortable; otherwise use JavaScript for speed.
+- [x] **P0:** Start local dev server.
+- [x] **P0:** Confirm app opens in browser.
 
 ## 2.2 Install Core Dependencies
 
-- [ ] **P0:** Install Tailwind CSS.
-- [ ] **P0:** Configure Tailwind content paths.
-- [ ] **P0:** Add global styles.
-- [ ] **P0:** Install icon library such as `lucide-react`.
-- [ ] **P0:** Install map libraries: `leaflet` and `react-leaflet`.
-- [ ] **P0:** Import Leaflet CSS.
+- [x] **P0:** Install Tailwind CSS.
+- [x] **P0:** Configure Tailwind content paths.
+- [x] **P0:** Add global styles.
+- [x] **P0:** Install icon library such as `lucide-react`.
+- [x] **P0:** Install map libraries: `leaflet` and `react-leaflet`.
+- [x] **P0:** Import Leaflet CSS.
 - [ ] **P1:** Install toast library if needed.
 - [ ] **P1:** Install Supabase client only if backend storage is planned.
 
 ## 2.3 Folder Structure
 
-- [ ] **P0:** Create `src/components` folder.
-- [ ] **P0:** Create `src/pages` or route-level component folder.
-- [ ] **P0:** Create `src/lib` folder for AI and storage helpers.
-- [ ] **P0:** Create `src/data` folder for demo issues.
-- [ ] **P0:** Create `src/types` folder if using TypeScript.
+- [x] **P0:** Create `src/components` folder.
+- [x] **P0:** Create `src/pages` or route-level component folder.
+- [x] **P0:** Create `src/lib` folder for AI and storage helpers.
+- [x] **P0:** Create `src/data` folder for demo issues.
+- [x] **P0:** Create `src/types` folder if using TypeScript.
 
 ## 2.4 Environment Variables
 
-- [ ] **P0:** Create `.env` file.
-- [ ] **P0:** Add AI API key variable.
-- [ ] **P0:** Ensure `.env` is not committed.
-- [ ] **P0:** Create `.env.example` with placeholder variable names.
-- [ ] **P1:** Add Supabase URL and anon key placeholders if using Supabase.
+- [x] **P0:** Create `.env` file.
+- [x] **P0:** Add AI API key variable.
+- [x] **P0:** Ensure `.env` is not committed.
+- [x] **P0:** Create `.env.example` with placeholder variable names.
+- [x] **P1:** Add Supabase URL and anon key placeholders if using Supabase.
 
 ---
 
