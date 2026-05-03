@@ -3,6 +3,7 @@ import {
   Building2,
   Check,
   ClipboardCopy,
+  Download,
   HelpCircle,
   MapPin,
   Save,
@@ -39,6 +40,9 @@ export function IssueCard({
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
 
+  const whatsappText = buildWhatsappMessage(issue);
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+
   async function handleCopy() {
     setCopyFailed(false);
     try {
@@ -50,10 +54,17 @@ export function IssueCard({
     }
   }
 
-  function handleShare() {
-    const text = `*${issue.title}*\n\n${issue.complaintMessage}\n\nLocation: ${issue.location.text}`;
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  function handleDownloadMarkdown() {
+    const markdown = buildMarkdownReport(issue);
+    const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${slugify(issue.title)}-civic-report.md`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   }
 
   return (
@@ -137,15 +148,24 @@ export function IssueCard({
               )}
             </button>
             {showShare && (
-              <button
-                type="button"
-                onClick={handleShare}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
               >
                 <Share2 className="h-4 w-4" aria-hidden />
                 Share on WhatsApp
-              </button>
+              </a>
             )}
+            <button
+              type="button"
+              onClick={handleDownloadMarkdown}
+              className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+            >
+              <Download className="h-4 w-4" aria-hidden />
+              Download Markdown
+            </button>
           </div>
           {copyFailed && (
             <p className="mt-2 text-xs text-rose-600">
@@ -204,4 +224,59 @@ function Section({ title, icon, children }: SectionProps) {
       <div className="text-sm text-slate-700">{children}</div>
     </section>
   );
+}
+
+function buildWhatsappMessage(issue: CivicIssue) {
+  return [
+    `*${issue.title}*`,
+    "",
+    `Location: ${issue.location.text}`,
+    `Severity: ${issue.severity}`,
+    "",
+    issue.complaintMessage,
+  ].join("\n");
+}
+
+function buildMarkdownReport(issue: CivicIssue) {
+  const missingInfo =
+    issue.missingInfo.length > 0
+      ? issue.missingInfo.map((item) => `- ${item}`).join("\n")
+      : "- No additional information needed";
+
+  return [
+    `# ${issue.title}`,
+    "",
+    `- **Category:** ${issue.category}`,
+    `- **Severity:** ${issue.severity}`,
+    `- **Status:** ${issue.status}`,
+    `- **Location:** ${issue.location.text}`,
+    `- **Suggested authority:** ${issue.suggestedAuthority}`,
+    `- **Created:** ${new Date(issue.createdAt).toLocaleString()}`,
+    "",
+    "## Summary",
+    "",
+    issue.summary,
+    "",
+    "## Complaint Message",
+    "",
+    issue.complaintMessage,
+    "",
+    "## Missing Information",
+    "",
+    missingInfo,
+    "",
+    "## Volunteer Next Steps",
+    "",
+    issue.volunteerAction,
+    "",
+  ].join("\n");
+}
+
+function slugify(value: string) {
+  const slug = value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return slug || "parapulse";
 }

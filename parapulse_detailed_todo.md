@@ -365,17 +365,17 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 8.1 Copy Complaint
 
-- [ ] **P0:** Add copy button near complaint message.
-- [ ] **P0:** Use Clipboard API.
-- [ ] **P0:** Show success feedback after copy.
-- [ ] **P0:** Handle clipboard failure gracefully.
+- [x] **P0:** Add copy button near complaint message.
+- [x] **P0:** Use Clipboard API.
+- [x] **P0:** Show success feedback after copy.
+- [x] **P0:** Handle clipboard failure gracefully.
 
 ## 8.2 Share Message
 
-- [ ] **P1:** Generate WhatsApp-friendly message.
-- [ ] **P1:** Include issue title, location, severity, and complaint.
-- [ ] **P1:** Add `Share on WhatsApp` link.
-- [ ] **P2:** Add downloadable Markdown report.
+- [x] **P1:** Generate WhatsApp-friendly message.
+- [x] **P1:** Include issue title, location, severity, and complaint.
+- [x] **P1:** Add `Share on WhatsApp` link.
+- [x] **P2:** Add downloadable Markdown report.
 
 ---
 
