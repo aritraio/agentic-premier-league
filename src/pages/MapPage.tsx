@@ -5,6 +5,7 @@ import { CATEGORIES } from "../data/categories";
 import { SEVERITY_LEVELS } from "../data/severity";
 import { STATUSES } from "../data/status";
 import { CommunityMap } from "../components/map/CommunityMap";
+import { IssueCard } from "../components/issue/IssueCard";
 import { IssueListItem } from "../components/issue/IssueListItem";
 
 interface MapPageProps {
@@ -37,6 +38,8 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
       return true;
     });
   }, [issues, categoryFilter, severityFilter, statusFilter]);
+
+  const selectedIssue = filtered.find((issue) => issue.id === selectedId);
 
   const unmappedCount = issues.length - issues.filter(
     (issue) =>
@@ -149,12 +152,19 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
           </div>
         </div>
 
-        <div className="order-1 h-[420px] lg:order-2 lg:col-span-3 lg:h-[620px]">
-          <CommunityMap
-            issues={filtered}
-            selectedId={selectedId}
-            onSelect={(issue) => setSelectedId(issue.id)}
-          />
+        <div className="order-1 lg:order-2 lg:col-span-3">
+          <div className="h-[420px] lg:h-[620px]">
+            <CommunityMap
+              issues={filtered}
+              selectedId={selectedId}
+              onSelect={(issue) => setSelectedId(issue.id)}
+            />
+          </div>
+          {selectedIssue && (
+            <div className="mt-5">
+              <IssueCard issue={selectedIssue} />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -357,7 +357,7 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 - [x] **P0:** Show popup on marker click.
 - [x] **P0:** Include title, category, severity, and status in popup.
 - [x] **P1:** Use marker color based on severity.
-- [ ] **P1:** Open selected issue detail from popup.
+- [x] **P1:** Open selected issue detail from popup.
 
 ---
 

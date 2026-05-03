@@ -74,6 +74,13 @@ export function CommunityMap({ issues, selectedId, onSelect }: CommunityMapProps
                 <div className="text-xs text-slate-600">
                   {issue.location.text}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => onSelect?.(issue)}
+                  className="rounded-md bg-emerald-600 px-2 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
+                >
+                  Open details
+                </button>
               </div>
             </Popup>
           </Marker>
