@@ -139,7 +139,8 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+      aria-busy={loading}
+      className="space-y-5 rounded-2xl border border-emerald-100 bg-white p-5 shadow-xl shadow-emerald-900/5 sm:p-6"
     >
       <div>
         <label
@@ -159,7 +160,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
           onChange={(event) => setDescription(event.target.value)}
           rows={5}
           placeholder="e.g. After heavy rain the road near the bus stop is flooded and pedestrians cannot cross."
-          className="mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          className="mt-2 block min-h-36 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
         />
       </div>
 
@@ -201,7 +202,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
         <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-start">
           <label
             htmlFor="issue-image"
-            className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-colors hover:border-emerald-400 hover:text-emerald-700"
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-600 transition-colors hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-700 sm:w-fit"
           >
             <ImageIcon className="h-4 w-4" aria-hidden />
             {imageUrl ? "Replace photo" : "Upload a photo"}
@@ -253,13 +254,20 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
-        <div className="flex flex-wrap gap-2">
+      {loading && (
+        <div className="parapulse-fade-up flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+          ParaPulse is classifying, estimating severity, and drafting your complaint.
+        </div>
+      )}
+
+      <div className="flex flex-col items-stretch justify-between gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           <button
             type="button"
             onClick={fillDemo}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50 sm:py-1.5"
           >
             <Wand2 className="h-3.5 w-3.5" aria-hidden />
             Use demo example
@@ -268,7 +276,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
             type="button"
             onClick={clearForm}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50 sm:py-1.5"
           >
             <Eraser className="h-3.5 w-3.5" aria-hidden />
             Clear form
@@ -278,7 +286,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-300"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-300 sm:w-auto"
         >
           {loading ? (
             <>

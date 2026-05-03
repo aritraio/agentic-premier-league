@@ -25,14 +25,14 @@ export function Navbar({ current }: NavbarProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-emerald-100 bg-white/90 shadow-sm shadow-emerald-900/5 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <a
           href={ROUTE_PATHS.landing}
-          className="flex items-center gap-2 text-slate-900"
+          className="flex items-center gap-2 text-slate-900 transition-colors hover:text-emerald-800"
           onClick={() => setOpen(false)}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-sm shadow-emerald-900/20">
             <Radio className="h-5 w-5" aria-hidden />
           </span>
           <span className="text-lg font-semibold tracking-tight">
@@ -57,7 +57,7 @@ export function Navbar({ current }: NavbarProps) {
           ))}
           <a
             href={ROUTE_PATHS.report}
-            className="ml-2 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+            className="ml-2 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-colors hover:bg-emerald-700"
           >
             Report an Issue
           </a>
@@ -66,7 +66,7 @@ export function Navbar({ current }: NavbarProps) {
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="rounded-md p-2 text-slate-700 hover:bg-slate-100 sm:hidden"
+          className="rounded-md p-2 text-slate-700 transition-colors hover:bg-emerald-50 hover:text-emerald-700 sm:hidden"
           onClick={() => setOpen((value) => !value)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -74,7 +74,7 @@ export function Navbar({ current }: NavbarProps) {
       </div>
 
       {open && (
-        <nav className="border-t border-slate-200 bg-white px-4 py-3 sm:hidden">
+        <nav className="parapulse-fade-up border-t border-emerald-100 bg-white px-4 py-3 shadow-sm sm:hidden">
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <li key={link.key}>
@@ -96,7 +96,7 @@ export function Navbar({ current }: NavbarProps) {
               <a
                 href={ROUTE_PATHS.report}
                 onClick={() => setOpen(false)}
-                className="mt-1 block rounded-md bg-emerald-600 px-3 py-2 text-center text-sm font-semibold text-white"
+                className="mt-1 block rounded-md bg-emerald-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm shadow-emerald-900/20"
               >
                 Report an Issue
               </a>

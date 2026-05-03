@@ -1,12 +1,12 @@
-import { useMemo, useState } from "react";
-import { Filter, Inbox } from "lucide-react";
+import { lazy, Suspense, useMemo, useState } from "react";
+import { Filter, Inbox, Loader2 } from "lucide-react";
 import type { CivicIssue, IssueStatus } from "../types/issue";
 import { CATEGORIES } from "../data/categories";
 import { SEVERITY_LEVELS } from "../data/severity";
 import { STATUSES } from "../data/status";
-import { CommunityMap } from "../components/map/CommunityMap";
 import { IssueCard } from "../components/issue/IssueCard";
 import { IssueListItem } from "../components/issue/IssueListItem";
+import { ROUTE_PATHS } from "../lib/router";
 
 interface MapPageProps {
   issues: CivicIssue[];
@@ -14,6 +14,11 @@ interface MapPageProps {
 }
 
 const ALL = "all" as const;
+const CommunityMap = lazy(() =>
+  import("../components/map/CommunityMap").then((module) => ({
+    default: module.CommunityMap,
+  })),
+);
 
 type CategoryFilter = "all" | (typeof CATEGORIES)[number]["value"];
 type SeverityFilter = "all" | (typeof SEVERITY_LEVELS)[number]["value"];
@@ -40,6 +45,8 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
   }, [issues, categoryFilter, severityFilter, statusFilter]);
 
   const selectedIssue = filtered.find((issue) => issue.id === selectedId);
+  const hasActiveFilters =
+    categoryFilter !== ALL || severityFilter !== ALL || statusFilter !== ALL;
 
   const unmappedCount = issues.length - issues.filter(
     (issue) =>
@@ -59,7 +66,7 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
         </p>
       </header>
 
-      <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-5 rounded-2xl border border-emerald-100 bg-white p-4 shadow-lg shadow-emerald-900/5">
         <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
           <Filter className="h-4 w-4" aria-hidden />
           Filters
@@ -107,16 +114,40 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
               </span>
             )}
           </div>
-          <div className="max-h-[560px] space-y-3 overflow-y-auto pr-1">
+          <div className="max-h-none space-y-3 overflow-y-auto pr-1 lg:max-h-[560px]">
             {filtered.length === 0 ? (
-              <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center">
+              <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-emerald-200 bg-white p-8 text-center shadow-sm">
                 <Inbox className="h-6 w-6 text-slate-400" aria-hidden />
                 <p className="text-sm font-semibold text-slate-700">
-                  No issues match your filters
+                  {issues.length === 0
+                    ? "No community issues yet"
+                    : "No issues match your filters"}
                 </p>
                 <p className="text-xs text-slate-500">
-                  Try clearing one of the filters above.
+                  {issues.length === 0
+                    ? "Generate and save a report to start populating the map."
+                    : "Try clearing one of the filters above."}
                 </p>
+                {issues.length === 0 ? (
+                  <a
+                    href={ROUTE_PATHS.report}
+                    className="mt-2 inline-flex items-center justify-center rounded-md bg-emerald-600 px-3 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-900/20 hover:bg-emerald-700"
+                  >
+                    Report first issue
+                  </a>
+                ) : hasActiveFilters ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCategoryFilter(ALL);
+                      setSeverityFilter(ALL);
+                      setStatusFilter(ALL);
+                    }}
+                    className="mt-2 inline-flex items-center justify-center rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50"
+                  >
+                    Clear filters
+                  </button>
+                ) : null}
               </div>
             ) : (
               filtered.map((issue) => (
@@ -153,12 +184,14 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
         </div>
 
         <div className="order-1 lg:order-2 lg:col-span-3">
-          <div className="h-[420px] lg:h-[620px]">
-            <CommunityMap
-              issues={filtered}
-              selectedId={selectedId}
-              onSelect={(issue) => setSelectedId(issue.id)}
-            />
+          <div className="h-[340px] sm:h-[440px] lg:h-[620px]">
+            <Suspense fallback={<MapLoadingFallback />}>
+              <CommunityMap
+                issues={filtered}
+                selectedId={selectedId}
+                onSelect={(issue) => setSelectedId(issue.id)}
+              />
+            </Suspense>
           </div>
           {selectedIssue && (
             <div className="mt-5">
@@ -167,6 +200,15 @@ export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function MapLoadingFallback() {
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white text-sm text-slate-600 shadow-xl shadow-slate-900/10">
+      <Loader2 className="h-5 w-5 animate-spin text-emerald-600" aria-hidden />
+      Loading community map…
     </div>
   );
 }

@@ -48,7 +48,7 @@ function App() {
   );
 
   return (
-    <div className="flex min-h-full flex-col bg-slate-50">
+    <div className="flex min-h-full flex-col bg-transparent">
       <Navbar current={route} />
       <main className="flex-1">
         {route === "landing" && <LandingPage />}

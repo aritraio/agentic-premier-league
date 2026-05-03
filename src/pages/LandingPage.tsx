@@ -10,6 +10,7 @@ import {
 import { ROUTE_PATHS } from "../lib/router";
 import { DEMO_ISSUES } from "../data/demoIssues";
 import { IssueListItem } from "../components/issue/IssueListItem";
+import { SeverityBadge } from "../components/badges/SeverityBadge";
 
 const STEPS = [
   {
@@ -45,12 +46,12 @@ export function LandingPage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white"
+          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.18),transparent_20rem),linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,0.82)_58%,transparent)]"
         />
         <div className="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-16">
           <div className="grid gap-10 sm:grid-cols-2 sm:items-center">
             <div className="space-y-5">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800 shadow-sm shadow-emerald-900/5">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden />
                 AI-powered civic reporting
               </span>
@@ -66,14 +67,14 @@ export function LandingPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={ROUTE_PATHS.report}
-                  className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-colors hover:bg-emerald-700 sm:w-auto"
                 >
                   Report an Issue
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </a>
                 <a
                   href={ROUTE_PATHS.map}
-                  className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:bg-slate-50"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50 sm:w-auto"
                 >
                   <Map className="h-4 w-4" aria-hidden />
                   View Community Map
@@ -82,7 +83,7 @@ export function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="parapulse-hover-lift rounded-2xl border border-emerald-100 bg-white/95 p-5 shadow-xl shadow-emerald-900/10">
                 <p className="text-xs font-medium uppercase tracking-wide text-emerald-700">
                   Sample report
                 </p>
@@ -99,9 +100,11 @@ export function LandingPage() {
                     <dt className="font-medium text-slate-500">Category</dt>
                     <dd className="mt-0.5 font-semibold text-slate-800">Waterlogging</dd>
                   </div>
-                  <div className="rounded-lg bg-slate-50 px-3 py-2">
+                  <div className="rounded-lg bg-orange-50 px-3 py-2 ring-1 ring-orange-100">
                     <dt className="font-medium text-slate-500">Severity</dt>
-                    <dd className="mt-0.5 font-semibold text-orange-700">High</dd>
+                    <dd className="mt-1">
+                      <SeverityBadge severity="High" />
+                    </dd>
                   </div>
                   <div className="col-span-2 rounded-lg bg-slate-50 px-3 py-2">
                     <dt className="font-medium text-slate-500">Suggested authority</dt>
@@ -139,7 +142,7 @@ export function LandingPage() {
             return (
               <li
                 key={step.title}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                className="parapulse-hover-lift rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
               >
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
@@ -186,7 +189,7 @@ export function LandingPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-8 text-white shadow-sm sm:px-10 sm:py-10">
+        <div className="rounded-2xl border border-emerald-900/20 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 px-6 py-8 text-white shadow-xl shadow-slate-900/10 sm:px-10 sm:py-10">
           <div className="grid gap-8 sm:grid-cols-3">
             {METRICS.map((metric) => (
               <div key={metric.label}>

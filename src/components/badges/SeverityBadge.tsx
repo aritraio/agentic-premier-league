@@ -13,7 +13,7 @@ export function SeverityBadge({ severity, compact }: SeverityBadgeProps) {
   return (
     <span
       className={
-        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold " +
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ring-inset " +
         meta.badgeClass
       }
     >

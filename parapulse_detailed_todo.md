@@ -383,32 +383,32 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 9.1 Demo Data
 
-- [ ] **P0:** Add waterlogging demo issue.
-- [ ] **P0:** Add garbage demo issue.
-- [ ] **P0:** Add broken streetlight demo issue.
-- [ ] **P1:** Add open drain demo issue.
-- [ ] **P1:** Add damaged footpath demo issue.
+- [x] **P0:** Add waterlogging demo issue.
+- [x] **P0:** Add garbage demo issue.
+- [x] **P0:** Add broken streetlight demo issue.
+- [x] **P1:** Add open drain demo issue.
+- [x] **P1:** Add damaged footpath demo issue.
 
 ## 9.2 Demo Flow
 
-- [ ] **P0:** Test complete flow from landing to report form.
-- [ ] **P0:** Test AI generation.
-- [ ] **P0:** Test saving report.
-- [ ] **P0:** Test report appearing on map.
-- [ ] **P0:** Test copy complaint button.
-- [ ] **P0:** Test fallback mode.
-- [ ] **P0:** Test on deployed URL or local server.
+- [x] **P0:** Test complete flow from landing to report form.
+- [x] **P0:** Test AI generation.
+- [x] **P0:** Test saving report.
+- [x] **P0:** Test report appearing on map.
+- [x] **P0:** Test copy complaint button.
+- [x] **P0:** Test fallback mode.
+- [x] **P0:** Test on deployed URL or local server.
 
 ## 9.3 Pitch Preparation
 
-- [ ] **P0:** Memorize one-line summary.
-- [ ] **P0:** Memorize problem statement.
-- [ ] **P0:** Memorize demo story.
-- [ ] **P0:** Prepare answer for “Why AI?”
-- [ ] **P0:** Prepare answer for “How is this community-focused?”
-- [ ] **P0:** Prepare answer for “What did you build?”
-- [ ] **P1:** Prepare answer for “How do you prevent fake reports?”
-- [ ] **P1:** Prepare answer for “How will this scale?”
+- [x] **P0:** Memorize one-line summary.
+- [x] **P0:** Memorize problem statement.
+- [x] **P0:** Memorize demo story.
+- [x] **P0:** Prepare answer for “Why AI?”
+- [x] **P0:** Prepare answer for “How is this community-focused?”
+- [x] **P0:** Prepare answer for “What did you build?”
+- [x] **P1:** Prepare answer for “How do you prevent fake reports?”
+- [x] **P1:** Prepare answer for “How will this scale?”
 
 ---
 
@@ -416,28 +416,28 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 10.1 Visual Design
 
-- [ ] **P0:** Use clean civic-tech color palette.
-- [ ] **P0:** Make severity visually obvious.
-- [ ] **P0:** Keep cards readable.
-- [ ] **P0:** Ensure important actions are visible.
-- [ ] **P1:** Add icons for civic issue categories.
-- [ ] **P1:** Add subtle animations.
-- [ ] **P1:** Add empty states.
+- [x] **P0:** Use clean civic-tech color palette.
+- [x] **P0:** Make severity visually obvious.
+- [x] **P0:** Keep cards readable.
+- [x] **P0:** Ensure important actions are visible.
+- [x] **P1:** Add icons for civic issue categories.
+- [x] **P1:** Add subtle animations.
+- [x] **P1:** Add empty states.
 
 ## 10.2 Mobile Responsiveness
 
-- [ ] **P0:** Test on narrow screen.
-- [ ] **P0:** Ensure report form is usable on mobile.
-- [ ] **P0:** Ensure map page does not break on mobile.
-- [ ] **P1:** Stack map and issue list on small screens.
+- [x] **P0:** Test on narrow screen.
+- [x] **P0:** Ensure report form is usable on mobile.
+- [x] **P0:** Ensure map page does not break on mobile.
+- [x] **P1:** Stack map and issue list on small screens.
 
 ## 10.3 Error and Loading States
 
-- [ ] **P0:** Show AI loading state.
-- [ ] **P0:** Show save success state.
-- [ ] **P0:** Show copy success state.
-- [ ] **P0:** Show map loading fallback.
-- [ ] **P1:** Add toast notifications.
+- [x] **P0:** Show AI loading state.
+- [x] **P0:** Show save success state.
+- [x] **P0:** Show copy success state.
+- [x] **P0:** Show map loading fallback.
+- [x] **P1:** Add toast notifications.
 
 ---
 

@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
+import { Loader2 } from "lucide-react";
 import type { CivicIssue } from "../../types/issue";
 import {
   buildSeverityMarkerIcon,
@@ -28,6 +29,7 @@ ensureLeafletDefaults();
  * the sidebar list and surface a small notice from the parent page.
  */
 export function CommunityMap({ issues, selectedId, onSelect }: CommunityMapProps) {
+  const [ready, setReady] = useState(false);
   const placedIssues = issues.filter(
     (issue) =>
       typeof issue.location.latitude === "number" &&
@@ -35,13 +37,20 @@ export function CommunityMap({ issues, selectedId, onSelect }: CommunityMapProps
   );
 
   return (
-    <div className="h-full w-full overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+    <div className="relative h-full w-full overflow-hidden rounded-2xl border border-slate-200 shadow-xl shadow-slate-900/10">
+      {!ready && (
+        <div className="absolute inset-0 z-[1000] flex flex-col items-center justify-center gap-2 bg-white/90 text-sm text-slate-600 backdrop-blur-sm">
+          <Loader2 className="h-5 w-5 animate-spin text-emerald-600" aria-hidden />
+          Loading community map…
+        </div>
+      )}
       <MapContainer
         center={KOLKATA_CENTER}
         zoom={DEFAULT_ZOOM}
         scrollWheelZoom
         className="h-full w-full"
       >
+        <MapReadyNotifier onReady={() => setReady(true)} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -88,6 +97,18 @@ export function CommunityMap({ issues, selectedId, onSelect }: CommunityMapProps
       </MapContainer>
     </div>
   );
+}
+
+interface MapReadyNotifierProps {
+  onReady: () => void;
+}
+
+function MapReadyNotifier({ onReady }: MapReadyNotifierProps) {
+  const map = useMap();
+  useEffect(() => {
+    map.whenReady(onReady);
+  }, [map, onReady]);
+  return null;
 }
 
 interface SelectedIssueFlyToProps {

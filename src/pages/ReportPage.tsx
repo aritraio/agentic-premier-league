@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Map, Sparkles } from "lucide-react";
+import { CheckCircle2, Loader2, Map, Sparkles } from "lucide-react";
 import { ReportForm } from "../components/report/ReportForm";
 import { IssueCard } from "../components/issue/IssueCard";
 import { generateIssueAsync } from "../lib/generateIssue";
@@ -23,12 +23,14 @@ export function ReportPage({ onSaveIssue }: ReportPageProps) {
   const [error, setError] = useState<string | undefined>(undefined);
   const [issue, setIssue] = useState<CivicIssue | undefined>(undefined);
   const [savedId, setSavedId] = useState<string | undefined>(undefined);
+  const [saveToastVisible, setSaveToastVisible] = useState(false);
 
   async function handleGenerate(draft: IssueDraft) {
     setLoading(true);
     setError(undefined);
     setIssue(undefined);
     setSavedId(undefined);
+    setSaveToastVisible(false);
     try {
       const result = await generateIssueAsync(draft);
       setIssue(result);
@@ -45,6 +47,8 @@ export function ReportPage({ onSaveIssue }: ReportPageProps) {
   function handleSave(value: CivicIssue) {
     onSaveIssue(value);
     setSavedId(value.id);
+    setSaveToastVisible(true);
+    window.setTimeout(() => setSaveToastVisible(false), 2500);
   }
 
   return (
@@ -79,7 +83,7 @@ export function ReportPage({ onSaveIssue }: ReportPageProps) {
                 showShare
               />
               {savedId === issue.id && (
-                <div className="flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                <div className="parapulse-fade-up flex flex-col gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 sm:flex-row sm:items-center sm:justify-between">
                   <span className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" aria-hidden />
                     Saved to the community map.
@@ -100,6 +104,17 @@ export function ReportPage({ onSaveIssue }: ReportPageProps) {
           )}
         </div>
       </div>
+      {saveToastVisible && (
+        <div
+          role="status"
+          className="parapulse-fade-up fixed bottom-4 left-4 right-4 z-50 rounded-xl border border-emerald-200 bg-white px-4 py-3 text-sm font-medium text-emerald-800 shadow-xl shadow-slate-900/15 sm:left-auto sm:right-4 sm:max-w-xs"
+        >
+          <span className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4" aria-hidden />
+            Report saved to the community map.
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -111,8 +126,12 @@ interface EmptyPreviewProps {
 
 function EmptyPreview({ loading, hasError }: EmptyPreviewProps) {
   return (
-    <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center">
-      <Sparkles className="h-8 w-8 text-emerald-500" aria-hidden />
+    <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-emerald-200 bg-white/90 p-8 text-center shadow-sm">
+      {loading ? (
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-500" aria-hidden />
+      ) : (
+        <Sparkles className="h-8 w-8 text-emerald-500" aria-hidden />
+      )}
       <h2 className="mt-3 text-base font-semibold text-slate-800">
         {loading
           ? "Analyzing your report…"

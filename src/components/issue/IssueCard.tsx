@@ -15,6 +15,7 @@ import type { CivicIssue } from "../../types/issue";
 import { CategoryBadge } from "../badges/CategoryBadge";
 import { SeverityBadge } from "../badges/SeverityBadge";
 import { StatusBadge } from "../badges/StatusBadge";
+import { getSeverityMeta } from "../../data/severity";
 
 interface IssueCardProps {
   issue: CivicIssue;
@@ -39,6 +40,7 @@ export function IssueCard({
 }: IssueCardProps) {
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  const severityMeta = getSeverityMeta(issue.severity);
 
   const whatsappText = buildWhatsappMessage(issue);
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
@@ -51,6 +53,7 @@ export function IssueCard({
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopyFailed(true);
+      window.setTimeout(() => setCopyFailed(false), 2500);
     }
   }
 
@@ -68,8 +71,13 @@ export function IssueCard({
   }
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <header className="flex flex-col gap-3 border-b border-slate-100 bg-gradient-to-br from-emerald-50 to-white px-5 py-4">
+    <article className="parapulse-fade-up relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1"
+        style={{ backgroundColor: severityMeta.markerColor }}
+      />
+      <header className="flex flex-col gap-3 border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-white px-5 py-5">
         <div className="flex items-center gap-2 text-xs font-medium text-emerald-700">
           <Sparkles className="h-3.5 w-3.5" aria-hidden />
           AI-generated civic report
@@ -126,14 +134,19 @@ export function IssueCard({
         </Section>
 
         <Section title="Complaint message">
-          <blockquote className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700">
+          <blockquote className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 leading-relaxed text-slate-700">
             {issue.complaintMessage}
           </blockquote>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
+          <div className="mt-3 grid gap-2 sm:flex sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+              className={
+                "inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs font-semibold shadow-sm transition-colors sm:py-1.5 " +
+                (copied
+                  ? "border border-emerald-200 bg-emerald-50 text-emerald-700"
+                  : "border border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50")
+              }
             >
               {copied ? (
                 <>
@@ -152,7 +165,7 @@ export function IssueCard({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+                className="inline-flex items-center justify-center gap-1.5 rounded-md border border-emerald-200 bg-emerald-600 px-3 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-900/20 transition-colors hover:bg-emerald-700 sm:py-1.5"
               >
                 <Share2 className="h-4 w-4" aria-hidden />
                 Share on WhatsApp
@@ -161,7 +174,7 @@ export function IssueCard({
             <button
               type="button"
               onClick={handleDownloadMarkdown}
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+              className="inline-flex items-center justify-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 sm:py-1.5"
             >
               <Download className="h-4 w-4" aria-hidden />
               Download Markdown
@@ -183,12 +196,12 @@ export function IssueCard({
       </div>
 
       {onSave && (
-        <footer className="flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 bg-slate-50 px-5 py-3">
+        <footer className="flex flex-wrap items-center justify-stretch gap-2 border-t border-slate-100 bg-slate-50 px-5 py-3 sm:justify-end">
           <button
             type="button"
             disabled={saved}
             onClick={() => onSave(issue)}
-            className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-300"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-300 sm:w-auto sm:py-1.5"
           >
             {saved ? (
               <>
@@ -203,6 +216,16 @@ export function IssueCard({
             )}
           </button>
         </footer>
+      )}
+      {(copied || copyFailed) && (
+        <div
+          role="status"
+          className="parapulse-fade-up pointer-events-none fixed bottom-4 left-4 right-4 z-50 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 shadow-xl shadow-slate-900/15 sm:left-auto sm:right-4 sm:max-w-xs"
+        >
+          {copied
+            ? "Complaint copied to clipboard."
+            : "Clipboard access failed. Copy the message manually."}
+        </div>
       )}
     </article>
   );
