@@ -83,7 +83,7 @@ const FALLBACK_RULE: KeywordRule = {
     "Share the report with neighbours, gather any additional evidence, and forward to the ward office.",
 };
 
-const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-1.5-flash";
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.1-flash-lite-preview";
 const GEMINI_API_KEY =
   import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_AI_API_KEY || "";
 
