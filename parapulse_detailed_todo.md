@@ -179,65 +179,65 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 4.1 App Layout
 
-- [ ] **P0:** Create top navigation.
-- [ ] **P0:** Add logo text: `ParaPulse`.
-- [ ] **P0:** Add nav links: `Report`, `Map`, `Demo`.
-- [ ] **P0:** Create responsive container.
-- [ ] **P0:** Add footer with theme text: `Built for community action`.
+- [x] **P0:** Create top navigation.
+- [x] **P0:** Add logo text: `ParaPulse`.
+- [x] **P0:** Add nav links: `Report`, `Map`, `Demo`.
+- [x] **P0:** Create responsive container.
+- [x] **P0:** Add footer with theme text: `Built for community action`.
 
 ## 4.2 Landing Page
 
-- [ ] **P0:** Create hero section.
-- [ ] **P0:** Add headline explaining product.
-- [ ] **P0:** Add short problem statement.
-- [ ] **P0:** Add CTA button: `Report an Issue`.
-- [ ] **P0:** Add secondary CTA: `View Community Map`.
-- [ ] **P1:** Add “How it works” section.
-- [ ] **P1:** Add three steps: upload, analyze, act.
-- [ ] **P1:** Add sample issue cards.
-- [ ] **P1:** Add impact metrics placeholder.
+- [x] **P0:** Create hero section.
+- [x] **P0:** Add headline explaining product.
+- [x] **P0:** Add short problem statement.
+- [x] **P0:** Add CTA button: `Report an Issue`.
+- [x] **P0:** Add secondary CTA: `View Community Map`.
+- [x] **P1:** Add “How it works” section.
+- [x] **P1:** Add three steps: upload, analyze, act.
+- [x] **P1:** Add sample issue cards.
+- [x] **P1:** Add impact metrics placeholder.
 
 ## 4.3 Report Issue Form
 
-- [ ] **P0:** Create text description textarea.
-- [ ] **P0:** Create location input.
-- [ ] **P0:** Create image upload input.
-- [ ] **P0:** Show uploaded image preview.
-- [ ] **P0:** Add generate button.
-- [ ] **P0:** Disable generate button when required fields are empty.
-- [ ] **P0:** Show loading state while AI runs.
-- [ ] **P0:** Show error state if AI fails.
-- [ ] **P1:** Add example-fill button for demo.
-- [ ] **P1:** Add clear form button.
+- [x] **P0:** Create text description textarea.
+- [x] **P0:** Create location input.
+- [x] **P0:** Create image upload input.
+- [x] **P0:** Show uploaded image preview.
+- [x] **P0:** Add generate button.
+- [x] **P0:** Disable generate button when required fields are empty.
+- [x] **P0:** Show loading state while AI runs.
+- [x] **P0:** Show error state if AI fails.
+- [x] **P1:** Add example-fill button for demo.
+- [x] **P1:** Add clear form button.
 
 ## 4.4 Generated Issue Card
 
-- [ ] **P0:** Show generated title.
-- [ ] **P0:** Show category badge.
-- [ ] **P0:** Show severity badge.
-- [ ] **P0:** Show location.
-- [ ] **P0:** Show AI summary.
-- [ ] **P0:** Show suggested authority.
-- [ ] **P0:** Show missing information list.
-- [ ] **P0:** Show complaint message.
-- [ ] **P0:** Show volunteer action.
-- [ ] **P0:** Add copy complaint button.
-- [ ] **P0:** Add save report button.
+- [x] **P0:** Show generated title.
+- [x] **P0:** Show category badge.
+- [x] **P0:** Show severity badge.
+- [x] **P0:** Show location.
+- [x] **P0:** Show AI summary.
+- [x] **P0:** Show suggested authority.
+- [x] **P0:** Show missing information list.
+- [x] **P0:** Show complaint message.
+- [x] **P0:** Show volunteer action.
+- [x] **P0:** Add copy complaint button.
+- [x] **P0:** Add save report button.
 - [ ] **P1:** Allow editing generated fields before saving.
-- [ ] **P1:** Add share text button.
+- [x] **P1:** Add share text button.
 
 ## 4.5 Community Map Page
 
-- [ ] **P0:** Render Leaflet map.
-- [ ] **P0:** Center map on Kolkata.
-- [ ] **P0:** Add OpenStreetMap tile layer.
-- [ ] **P0:** Add markers for demo issues.
-- [ ] **P0:** Add marker popup with title, severity, and location.
-- [ ] **P0:** Add sidebar list of issues.
-- [ ] **P1:** Add category filter.
-- [ ] **P1:** Add severity filter.
-- [ ] **P1:** Add status filter.
-- [ ] **P1:** Add different marker colors by severity.
+- [x] **P0:** Render Leaflet map.
+- [x] **P0:** Center map on Kolkata.
+- [x] **P0:** Add OpenStreetMap tile layer.
+- [x] **P0:** Add markers for demo issues.
+- [x] **P0:** Add marker popup with title, severity, and location.
+- [x] **P0:** Add sidebar list of issues.
+- [x] **P1:** Add category filter.
+- [x] **P1:** Add severity filter.
+- [x] **P1:** Add status filter.
+- [x] **P1:** Add different marker colors by severity.
 
 ## 4.6 Issue Detail View
 

@@ -1,6 +1,73 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ParaPulse severity-coloured Leaflet markers (see src/lib/leaflet.ts). */
+.parapulse-marker-wrapper {
+  background: transparent;
+  border: 0;
+}
+
+.parapulse-marker {
+  position: relative;
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+.parapulse-marker__dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: var(--marker-color, #0f766e);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95),
+    0 1px 4px rgba(15, 23, 42, 0.25);
+}
+
+.parapulse-marker__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: var(--marker-color, #0f766e);
+  opacity: 0.35;
+  animation: parapulse-pulse 2.4s ease-out infinite;
+}
+
+@keyframes parapulse-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  80% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.leaflet-container {
+  font-family: inherit;
 }
