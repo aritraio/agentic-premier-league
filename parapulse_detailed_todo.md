@@ -135,43 +135,43 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 3.1 Civic Issue Type
 
-- [ ] **P0:** Define issue fields: `id`, `title`, `category`, `severity`, `summary`, `location`, `status`, `createdAt`.
-- [ ] **P0:** Add AI fields: `suggestedAuthority`, `missingInfo`, `complaintMessage`, `volunteerAction`.
-- [ ] **P0:** Add optional image field: `imageUrl` or local preview URL.
-- [ ] **P0:** Add optional coordinates: `latitude`, `longitude`.
+- [x] **P0:** Define issue fields: `id`, `title`, `category`, `severity`, `summary`, `location`, `status`, `createdAt`.
+- [x] **P0:** Add AI fields: `suggestedAuthority`, `missingInfo`, `complaintMessage`, `volunteerAction`.
+- [x] **P0:** Add optional image field: `imageUrl` or local preview URL.
+- [x] **P0:** Add optional coordinates: `latitude`, `longitude`.
 
 ## 3.2 Categories
 
-- [ ] **P0:** Define category list.
-- [ ] **P0:** Include `Waterlogging`.
-- [ ] **P0:** Include `Garbage`.
-- [ ] **P0:** Include `Streetlight`.
-- [ ] **P0:** Include `Road Damage`.
-- [ ] **P0:** Include `Drainage`.
-- [ ] **P0:** Include `Public Safety`.
-- [ ] **P1:** Include `Accessibility`.
-- [ ] **P1:** Include `Other`.
+- [x] **P0:** Define category list.
+- [x] **P0:** Include `Waterlogging`.
+- [x] **P0:** Include `Garbage`.
+- [x] **P0:** Include `Streetlight`.
+- [x] **P0:** Include `Road Damage`.
+- [x] **P0:** Include `Drainage`.
+- [x] **P0:** Include `Public Safety`.
+- [x] **P1:** Include `Accessibility`.
+- [x] **P1:** Include `Other`.
 
 ## 3.3 Severity Levels
 
-- [ ] **P0:** Define severity levels: `Low`, `Medium`, `High`, `Urgent`.
-- [ ] **P0:** Assign badge colors for each level.
-- [ ] **P0:** Define severity meaning for pitch/demo.
+- [x] **P0:** Define severity levels: `Low`, `Medium`, `High`, `Urgent`.
+- [x] **P0:** Assign badge colors for each level.
+- [x] **P0:** Define severity meaning for pitch/demo.
 
 ## 3.4 Status Values
 
-- [ ] **P0:** Define status values: `New`, `Reported`, `In progress`, `Resolved`.
-- [ ] **P0:** Assign status badge colors.
+- [x] **P0:** Define status values: `New`, `Reported`, `In progress`, `Resolved`.
+- [x] **P0:** Assign status badge colors.
 - [ ] **P1:** Allow status updates from UI.
 
 ## 3.5 Demo Data
 
-- [ ] **P0:** Create 3 demo issues.
-- [ ] **P0:** Add realistic Kolkata locations.
-- [ ] **P0:** Add map coordinates for each demo issue.
-- [ ] **P0:** Add believable complaint messages.
-- [ ] **P0:** Add varied categories and severity levels.
-- [ ] **P1:** Add 5 demo issues for richer map.
+- [x] **P0:** Create 3 demo issues.
+- [x] **P0:** Add realistic Kolkata locations.
+- [x] **P0:** Add map coordinates for each demo issue.
+- [x] **P0:** Add believable complaint messages.
+- [x] **P0:** Add varied categories and severity levels.
+- [x] **P1:** Add 5 demo issues for richer map.
 
 ---
 
