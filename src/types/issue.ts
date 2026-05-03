@@ -83,4 +83,6 @@ export interface IssueDraft {
   description: string;
   location: string;
   imageUrl?: string;
+  imageData?: string;
+  imageMimeType?: string;
 }

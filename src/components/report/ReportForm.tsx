@@ -30,6 +30,24 @@ const DEMO_DRAFT: IssueDraft = {
   location: "Near Salt Lake Sector V bus stop, Kolkata",
 };
 
+const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+
+function fileToBase64Data(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result !== "string") {
+        reject(new Error("Invalid image data"));
+        return;
+      }
+      resolve(result.split(",")[1] ?? "");
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
 /**
  * Form used to capture a civic issue from the reporter, including a free
  * text description, location, and an optional image.
@@ -42,31 +60,68 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+  const [imageData, setImageData] = useState<string | undefined>(undefined);
+  const [imageMimeType, setImageMimeType] = useState<string | undefined>(undefined);
+  const [imageError, setImageError] = useState<string | undefined>(undefined);
+  const [imageReading, setImageReading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const canSubmit =
-    description.trim().length > 0 && location.trim().length > 0 && !loading;
+    description.trim().length > 0 &&
+    location.trim().length > 0 &&
+    !loading &&
+    !imageReading &&
+    !imageError;
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
+    setImageError(undefined);
+    setImageData(undefined);
+    setImageMimeType(undefined);
+    if (file.size > MAX_IMAGE_BYTES) {
+      clearImage();
+      setImageError("Please choose an image smaller than 4 MB.");
+      return;
+    }
+    const nextImageUrl = URL.createObjectURL(file);
     if (imageUrl) URL.revokeObjectURL(imageUrl);
-    setImageUrl(URL.createObjectURL(file));
+    setImageUrl(nextImageUrl);
+    setImageReading(true);
+    try {
+      const data = await fileToBase64Data(file);
+      setImageData(data);
+      setImageMimeType(file.type || "image/jpeg");
+    } catch {
+      URL.revokeObjectURL(nextImageUrl);
+      setImageUrl(undefined);
+      setImageError("Could not prepare this image for AI analysis.");
+    } finally {
+      setImageReading(false);
+    }
   }
 
   function clearImage() {
     if (imageUrl) URL.revokeObjectURL(imageUrl);
     setImageUrl(undefined);
+    setImageData(undefined);
+    setImageMimeType(undefined);
+    setImageError(undefined);
+    setImageReading(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!canSubmit) return;
+    const persistedImageUrl =
+      imageData && imageMimeType ? `data:${imageMimeType};base64,${imageData}` : imageUrl;
     onGenerate({
       description: description.trim(),
       location: location.trim(),
-      imageUrl,
+      imageUrl: persistedImageUrl,
+      imageData,
+      imageMimeType,
     });
   }
 
@@ -178,6 +233,17 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
             </div>
           )}
         </div>
+        {imageReading && (
+          <p className="mt-2 text-xs text-slate-500">
+            Preparing photo for AI analysis…
+          </p>
+        )}
+        {imageError && (
+          <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-600">
+            <AlertCircle className="h-3.5 w-3.5" aria-hidden />
+            {imageError}
+          </p>
+        )}
       </div>
 
       {error && (

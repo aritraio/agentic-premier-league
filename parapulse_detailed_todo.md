@@ -253,59 +253,59 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 5.1 Choose AI Provider
 
-- [ ] **P0:** Choose Gemini or OpenAI.
-- [ ] **P0:** Confirm model supports required input.
-- [ ] **P0:** Confirm API key is available.
-- [ ] **P0:** Confirm request works locally.
+- [x] **P0:** Choose Gemini or OpenAI.
+- [x] **P0:** Confirm model supports required input.
+- [x] **P0:** Confirm API key is available.
+- [x] **P0:** Confirm request works locally.
 
 ## 5.2 AI Prompt Design
 
-- [ ] **P0:** Write system instruction: AI acts as a civic issue analyst.
-- [ ] **P0:** Tell AI to classify issue category.
-- [ ] **P0:** Tell AI to estimate severity.
-- [ ] **P0:** Tell AI to generate concise formal summary.
-- [ ] **P0:** Tell AI to suggest likely authority.
-- [ ] **P0:** Tell AI to list missing information.
-- [ ] **P0:** Tell AI to generate complaint message.
-- [ ] **P0:** Tell AI to generate volunteer action suggestion.
-- [ ] **P0:** Tell AI to return strict JSON only.
-- [ ] **P0:** Tell AI to avoid making unsupported claims.
-- [ ] **P0:** Tell AI to mention uncertainty if input is unclear.
+- [x] **P0:** Write system instruction: AI acts as a civic issue analyst.
+- [x] **P0:** Tell AI to classify issue category.
+- [x] **P0:** Tell AI to estimate severity.
+- [x] **P0:** Tell AI to generate concise formal summary.
+- [x] **P0:** Tell AI to suggest likely authority.
+- [x] **P0:** Tell AI to list missing information.
+- [x] **P0:** Tell AI to generate complaint message.
+- [x] **P0:** Tell AI to generate volunteer action suggestion.
+- [x] **P0:** Tell AI to return strict JSON only.
+- [x] **P0:** Tell AI to avoid making unsupported claims.
+- [x] **P0:** Tell AI to mention uncertainty if input is unclear.
 
 ## 5.3 JSON Output Handling
 
-- [ ] **P0:** Define expected JSON schema.
-- [ ] **P0:** Parse AI response safely.
-- [ ] **P0:** Validate required fields.
-- [ ] **P0:** Add fallback values for missing fields.
-- [ ] **P0:** Show friendly error if response cannot be parsed.
-- [ ] **P1:** Add retry button.
+- [x] **P0:** Define expected JSON schema.
+- [x] **P0:** Parse AI response safely.
+- [x] **P0:** Validate required fields.
+- [x] **P0:** Add fallback values for missing fields.
+- [x] **P0:** Show friendly error if response cannot be parsed.
+- [x] **P1:** Add retry button.
 
 ## 5.4 Text Input Analysis
 
-- [ ] **P0:** Send text description and location to AI.
-- [ ] **P0:** Receive structured civic issue JSON.
-- [ ] **P0:** Render output in issue card.
-- [ ] **P0:** Test with waterlogging example.
-- [ ] **P0:** Test with garbage example.
-- [ ] **P0:** Test with broken streetlight example.
+- [x] **P0:** Send text description and location to AI.
+- [x] **P0:** Receive structured civic issue JSON.
+- [x] **P0:** Render output in issue card.
+- [x] **P0:** Test with waterlogging example.
+- [x] **P0:** Test with garbage example.
+- [x] **P0:** Test with broken streetlight example.
 
 ## 5.5 Image Input Analysis
 
-- [ ] **P1:** Convert uploaded image to base64 if provider requires it.
-- [ ] **P1:** Send image and text to vision-capable model.
-- [ ] **P1:** Ask AI to use image only as supporting evidence.
-- [ ] **P1:** Handle image too large error.
+- [x] **P1:** Convert uploaded image to base64 if provider requires it.
+- [x] **P1:** Send image and text to vision-capable model.
+- [x] **P1:** Ask AI to use image only as supporting evidence.
+- [x] **P1:** Handle image too large error.
 - [ ] **P1:** Compress image if needed.
 - [ ] **P2:** Extract visual evidence from image.
 
 ## 5.6 AI Fallback Mode
 
-- [ ] **P0:** Create fallback report generator for demo safety.
-- [ ] **P0:** If API fails, generate structured output from local template.
-- [ ] **P0:** Make fallback output realistic.
-- [ ] **P0:** Add visible message only if needed.
-- [ ] **P0:** Test demo with API disabled.
+- [x] **P0:** Create fallback report generator for demo safety.
+- [x] **P0:** If API fails, generate structured output from local template.
+- [x] **P0:** Make fallback output realistic.
+- [x] **P0:** Add visible message only if needed.
+- [x] **P0:** Test demo with API disabled.
 
 ---
 
@@ -313,12 +313,12 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 6.1 Fast MVP Storage
 
-- [ ] **P0:** Store issue list in React state.
-- [ ] **P0:** Save issue list to LocalStorage.
-- [ ] **P0:** Load saved issues on app startup.
-- [ ] **P0:** Load demo issues if no saved issues exist.
-- [ ] **P0:** Add generated issue to issue list after save.
-- [ ] **P0:** Persist status changes.
+- [x] **P0:** Store issue list in React state.
+- [x] **P0:** Save issue list to LocalStorage.
+- [x] **P0:** Load saved issues on app startup.
+- [x] **P0:** Load demo issues if no saved issues exist.
+- [x] **P0:** Add generated issue to issue list after save.
+- [x] **P0:** Persist status changes.
 
 ## 6.2 Supabase Storage
 
@@ -338,25 +338,25 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 7.1 Default Map Setup
 
-- [ ] **P0:** Set default center to Kolkata.
-- [ ] **P0:** Set useful zoom level.
-- [ ] **P0:** Confirm map tiles load.
-- [ ] **P0:** Fix Leaflet marker icon issue if markers do not appear.
+- [x] **P0:** Set default center to Kolkata.
+- [x] **P0:** Set useful zoom level.
+- [x] **P0:** Confirm map tiles load.
+- [x] **P0:** Fix Leaflet marker icon issue if markers do not appear.
 
 ## 7.2 Location Handling
 
-- [ ] **P0:** For MVP, use predefined coordinates for demo locations.
-- [ ] **P0:** Assign default Kolkata coordinate if user location is text-only.
-- [ ] **P1:** Add simple location-to-coordinate mapping for known demo locations.
+- [x] **P0:** For MVP, use predefined coordinates for demo locations.
+- [x] **P0:** Assign default Kolkata coordinate if user location is text-only.
+- [x] **P1:** Add simple location-to-coordinate mapping for known demo locations.
 - [ ] **P2:** Add geocoding API later.
 - [ ] **P2:** Add browser geolocation later.
 
 ## 7.3 Marker Experience
 
-- [ ] **P0:** Show issue markers.
-- [ ] **P0:** Show popup on marker click.
-- [ ] **P0:** Include title, category, severity, and status in popup.
-- [ ] **P1:** Use marker color based on severity.
+- [x] **P0:** Show issue markers.
+- [x] **P0:** Show popup on marker click.
+- [x] **P0:** Include title, category, severity, and status in popup.
+- [x] **P1:** Use marker color based on severity.
 - [ ] **P1:** Open selected issue detail from popup.
 
 ---

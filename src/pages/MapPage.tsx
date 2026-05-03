@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Filter, Inbox } from "lucide-react";
-import type { CivicIssue } from "../types/issue";
+import type { CivicIssue, IssueStatus } from "../types/issue";
 import { CATEGORIES } from "../data/categories";
 import { SEVERITY_LEVELS } from "../data/severity";
 import { STATUSES } from "../data/status";
@@ -9,6 +9,7 @@ import { IssueListItem } from "../components/issue/IssueListItem";
 
 interface MapPageProps {
   issues: CivicIssue[];
+  onUpdateStatus: (id: string, status: IssueStatus) => void;
 }
 
 const ALL = "all" as const;
@@ -22,7 +23,7 @@ type StatusFilter = "all" | (typeof STATUSES)[number]["value"];
  * issues. The list and map share `selectedId` so clicking either one
  * highlights the same issue on the other side.
  */
-export function MapPage({ issues }: MapPageProps) {
+export function MapPage({ issues, onUpdateStatus }: MapPageProps) {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>(ALL);
   const [severityFilter, setSeverityFilter] = useState<SeverityFilter>(ALL);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>(ALL);
@@ -116,12 +117,33 @@ export function MapPage({ issues }: MapPageProps) {
               </div>
             ) : (
               filtered.map((issue) => (
-                <IssueListItem
-                  key={issue.id}
-                  issue={issue}
-                  active={issue.id === selectedId}
-                  onSelect={() => setSelectedId(issue.id)}
-                />
+                <div key={issue.id} className="space-y-2">
+                  <IssueListItem
+                    issue={issue}
+                    active={issue.id === selectedId}
+                    onSelect={() => setSelectedId(issue.id)}
+                  />
+                  <label
+                    htmlFor={`status-${issue.id}`}
+                    className="block rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-medium text-slate-600 shadow-sm"
+                  >
+                    Update status
+                    <select
+                      id={`status-${issue.id}`}
+                      value={issue.status}
+                      onChange={(event) =>
+                        onUpdateStatus(issue.id, event.target.value as IssueStatus)
+                      }
+                      className="mt-1 block w-full rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm text-slate-800 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                    >
+                      {STATUSES.map((meta) => (
+                        <option key={meta.value} value={meta.value}>
+                          {meta.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
               ))
             )}
           </div>
