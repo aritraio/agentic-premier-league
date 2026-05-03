@@ -84,8 +84,7 @@ const FALLBACK_RULE: KeywordRule = {
 };
 
 const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.1-flash-lite-preview";
-const GEMINI_API_KEY =
-  import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_AI_API_KEY || "";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
 const ISSUE_CATEGORIES: IssueCategory[] = [
   "Waterlogging",
