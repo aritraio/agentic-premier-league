@@ -18,30 +18,78 @@ Build a polished hackathon MVP of **ParaPulse**, an AI-powered civic issue repor
 
 ## 1.1 Finalize Product Positioning
 
-- [ ] **P0:** Finalize product name: `ParaPulse`.
-- [ ] **P0:** Finalize tagline: `From community complaints to actionable civic reports in seconds.`
-- [ ] **P0:** Write one-line description for landing page.
-- [ ] **P0:** Define primary target user: local residents and student volunteers.
-- [ ] **P0:** Define secondary target users: RWAs, NGOs, community organizers.
-- [ ] **P0:** Define core value proposition: turn messy local issue inputs into structured civic action reports.
+- [x] **P0:** Finalize product name: `ParaPulse`.
+- [x] **P0:** Finalize tagline: `From community complaints to actionable civic reports in seconds.`
+- [x] **P0:** Write one-line description for landing page.
+- [x] **P0:** Define primary target user: local residents and student volunteers.
+- [x] **P0:** Define secondary target users: RWAs, NGOs, community organizers.
+- [x] **P0:** Define core value proposition: turn messy local issue inputs into structured civic action reports.
+
+### Final Product Positioning
+
+- **Product name:** `ParaPulse`
+- **Tagline:** `From community complaints to actionable civic reports in seconds.`
+- **Landing page one-liner:** ParaPulse helps residents and volunteers turn photos or short descriptions of civic problems into structured, shareable reports that can be mapped, tracked, and escalated.
+- **Primary target user:** Local residents and student volunteers who notice civic issues and need a faster way to create usable reports.
+- **Secondary target users:** Resident welfare associations, NGOs, community organizers, and local volunteer groups.
+- **Core value proposition:** ParaPulse converts messy local issue inputs into clear civic action reports with category, severity, location, suggested authority, complaint text, and volunteer next steps.
+- **Top issue categories for MVP:** Waterlogging, garbage accumulation, broken streetlights, open drains, damaged roads, public safety hazards, accessibility issues.
 
 ## 1.2 Finalize Problem Statement
 
-- [ ] **P0:** Write clear problem statement in 2–3 lines.
-- [ ] **P0:** Mention specific civic issues: waterlogging, garbage, broken streetlights, open drains, damaged roads.
-- [ ] **P0:** Explain why WhatsApp/social media complaints are not enough.
-- [ ] **P0:** Explain why structured reports help volunteers and communities.
+- [x] **P0:** Write clear problem statement in 2–3 lines.
+- [x] **P0:** Mention specific civic issues: waterlogging, garbage, broken streetlights, open drains, damaged roads.
+- [x] **P0:** Explain why WhatsApp/social media complaints are not enough.
+- [x] **P0:** Explain why structured reports help volunteers and communities.
+
+### Final Problem Statement
+
+Local civic problems such as waterlogging, garbage piles, broken streetlights, open drains, and damaged roads are often noticed by residents but only discussed informally in WhatsApp groups or social media posts. These complaints are scattered, emotional, incomplete, and hard for volunteers or authorities to prioritize. ParaPulse turns those messy inputs into structured reports so communities can document evidence, identify urgency, coordinate volunteers, and escalate issues more effectively.
 
 ## 1.3 Prepare Demo Scenario
 
-- [ ] **P0:** Choose main demo scenario: waterlogging near Salt Lake Sector V bus stop.
-- [ ] **P0:** Prepare sample user description.
-- [ ] **P0:** Prepare sample image or placeholder image.
-- [ ] **P0:** Prepare sample location text.
-- [ ] **P0:** Prepare expected AI output.
-- [ ] **P0:** Prepare one-minute pitch script.
-- [ ] **P1:** Prepare backup demo scenario: garbage near Gariahat market.
-- [ ] **P1:** Prepare backup demo scenario: broken streetlight near Jadavpur.
+- [x] **P0:** Choose main demo scenario: waterlogging near Salt Lake Sector V bus stop.
+- [x] **P0:** Prepare sample user description.
+- [x] **P0:** Prepare sample image or placeholder image.
+- [x] **P0:** Prepare sample location text.
+- [x] **P0:** Prepare expected AI output.
+- [x] **P0:** Prepare one-minute pitch script.
+- [x] **P1:** Prepare backup demo scenario: garbage near Gariahat market.
+- [x] **P1:** Prepare backup demo scenario: broken streetlight near Jadavpur.
+
+### Main Demo Scenario
+
+- **Scenario:** Waterlogging near Salt Lake Sector V bus stop after rain.
+- **Sample user description:** After heavy rain, the road near the Salt Lake Sector V bus stop is badly waterlogged. Pedestrians cannot cross safely, buses are stopping in the flooded area, and vehicles are splashing dirty water on people waiting nearby.
+- **Sample image:** Use a placeholder image showing a flooded urban road, waterlogged bus stop, or rainy street.
+- **Sample location text:** `Near Salt Lake Sector V bus stop, Kolkata`
+- **Expected category:** Waterlogging
+- **Expected severity:** High
+- **Suggested authority:** Municipal drainage department / local ward office
+- **Suggested volunteer action:** Share the report with nearby residents, add more photos if possible, warn pedestrians, and escalate the complaint to the ward office.
+- **Expected complaint message:** There is severe waterlogging near the Salt Lake Sector V bus stop in Kolkata after rainfall. The flooded road is causing difficulty for pedestrians, bus passengers, and nearby traffic. Please inspect the drainage issue and arrange urgent clearing or repair to prevent further inconvenience and safety risks.
+
+### Backup Demo Scenario 1
+
+- **Scenario:** Garbage accumulation near Gariahat market.
+- **Sample user description:** A large pile of garbage has been left near Gariahat market for two days. The smell is spreading, pedestrians are avoiding the area, and stray animals are tearing open the bags.
+- **Sample location text:** `Near Gariahat market, Kolkata`
+- **Expected category:** Garbage
+- **Expected severity:** Medium
+- **Suggested authority:** Municipal sanitation department / local ward office
+
+### Backup Demo Scenario 2
+
+- **Scenario:** Broken streetlight near Jadavpur.
+- **Sample user description:** The streetlight near the Jadavpur 8B bus stand has not worked for several nights. The road becomes very dark after evening, creating safety concerns for students, pedestrians, and commuters.
+- **Sample location text:** `Near Jadavpur 8B bus stand, Kolkata`
+- **Expected category:** Broken streetlight
+- **Expected severity:** High
+- **Suggested authority:** Electricity maintenance department / local ward office
+
+### Final 1-Minute Pitch Script
+
+> “ParaPulse helps communities turn everyday civic problems into actionable reports. Today, people often post issues like waterlogging, garbage, or broken streetlights in WhatsApp groups, but those complaints are unstructured, hard to track, and difficult to escalate. With ParaPulse, a resident uploads a photo or short description, adds the location, and AI generates a structured report with category, severity, suggested authority, missing information, and a formal complaint message. The issue can then be saved to a community map so volunteers can see what is urgent, coordinate action, and share better evidence. ParaPulse is not just another complaint form — it is a community-first civic reporting workflow that helps people move from frustration to organized local action.”
 
 ---
 

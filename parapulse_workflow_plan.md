@@ -487,6 +487,22 @@ You are a student walking near Salt Lake Sector V after rain. You notice waterlo
 
 Instead of just posting in a WhatsApp group, you open ParaPulse.
 
+## Main Demo Input
+
+- **Issue description:** After heavy rain, the road near the Salt Lake Sector V bus stop is badly waterlogged. Pedestrians cannot cross safely, buses are stopping in the flooded area, and vehicles are splashing dirty water on people waiting nearby.
+- **Image:** Placeholder image of a flooded urban road, waterlogged bus stop, or rainy street.
+- **Location:** Near Salt Lake Sector V bus stop, Kolkata.
+
+## Expected AI Output
+
+- **Category:** Waterlogging
+- **Severity:** High
+- **Title:** Severe waterlogging near Salt Lake Sector V bus stop
+- **Suggested authority:** Municipal drainage department / local ward office
+- **Missing information:** Duration of the issue, exact landmark, optional contact details.
+- **Volunteer action:** Share the report with nearby residents, collect additional photos if possible, warn pedestrians, and escalate to the local ward office.
+- **Complaint message:** There is severe waterlogging near the Salt Lake Sector V bus stop in Kolkata after rainfall. The flooded road is causing difficulty for pedestrians, bus passengers, and nearby traffic. Please inspect the drainage issue and arrange urgent clearing or repair to prevent further inconvenience and safety risks.
+
 ## Demo Steps
 
 1. Open landing page.
@@ -504,7 +520,25 @@ Instead of just posting in a WhatsApp group, you open ParaPulse.
 
 ## 1-Minute Pitch Script
 
-> “ParaPulse helps communities turn everyday civic problems into actionable reports. Today, people often post issues like waterlogging, garbage, or broken streetlights in WhatsApp groups, but those complaints are unstructured and hard to escalate. With ParaPulse, a resident uploads a photo or short description, and AI classifies the issue, estimates severity, suggests the responsible authority, and generates a formal complaint message. The report is then pinned on a community map so volunteers can track and prioritize issues. This is not just a chatbot — it is an AI civic reporting workflow that helps communities move from frustration to action.”
+> “ParaPulse helps communities turn everyday civic problems into actionable reports. Today, people often post issues like waterlogging, garbage, or broken streetlights in WhatsApp groups, but those complaints are unstructured, hard to track, and difficult to escalate. With ParaPulse, a resident uploads a photo or short description, adds the location, and AI generates a structured report with category, severity, suggested authority, missing information, and a formal complaint message. The issue can then be saved to a community map so volunteers can see what is urgent, coordinate action, and share better evidence. ParaPulse is not just another complaint form — it is a community-first civic reporting workflow that helps people move from frustration to organized local action.”
+
+## Backup Demo Examples
+
+### Garbage Near Gariahat Market
+
+- **Issue description:** A large pile of garbage has been left near Gariahat market for two days. The smell is spreading, pedestrians are avoiding the area, and stray animals are tearing open the bags.
+- **Location:** Near Gariahat market, Kolkata.
+- **Expected category:** Garbage
+- **Expected severity:** Medium
+- **Suggested authority:** Municipal sanitation department / local ward office
+
+### Broken Streetlight Near Jadavpur
+
+- **Issue description:** The streetlight near the Jadavpur 8B bus stand has not worked for several nights. The road becomes very dark after evening, creating safety concerns for students, pedestrians, and commuters.
+- **Location:** Near Jadavpur 8B bus stand, Kolkata.
+- **Expected category:** Broken streetlight
+- **Expected severity:** High
+- **Suggested authority:** Electricity maintenance department / local ward office
 
 ---
 
@@ -576,13 +610,13 @@ A working MVP where users can submit a civic issue, generate an AI-powered struc
 
 ## Phase 1: Product Finalization
 
-- [ ] Finalize project name: ParaPulse.
-- [ ] Finalize tagline.
-- [ ] Define target users.
-- [ ] Define top civic issue categories.
-- [ ] Write final problem statement.
-- [ ] Write final 1-minute pitch.
-- [ ] Prepare 3 realistic demo examples.
+- [x] Finalize project name: ParaPulse.
+- [x] Finalize tagline.
+- [x] Define target users.
+- [x] Define top civic issue categories.
+- [x] Write final problem statement.
+- [x] Write final 1-minute pitch.
+- [x] Prepare 3 realistic demo examples.
 
 ## Phase 2: Project Setup
 
