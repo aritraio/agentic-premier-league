@@ -445,32 +445,32 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 ## 11.1 Build Check
 
-- [ ] **P0:** Run production build.
-- [ ] **P0:** Fix build errors.
-- [ ] **P0:** Check console errors.
-- [ ] **P0:** Verify environment variables.
+- [x] **P0:** Run production build.
+- [x] **P0:** Fix build errors.
+- [x] **P0:** Check console errors.
+- [x] **P0:** Verify environment variables.
 
 ## 11.2 Deploy
 
-- [ ] **P0:** Deploy to Vercel or Netlify.
-- [ ] **P0:** Add AI API key in deployment environment settings.
-- [ ] **P0:** Test deployed app.
-- [ ] **P0:** Confirm AI works in deployed app.
-- [ ] **P0:** Confirm map loads in deployed app.
-- [ ] **P0:** Keep local backup ready.
+- [x] **P0:** Deploy to Vercel or Netlify.
+- [x] **P0:** Add AI API key in deployment environment settings.
+- [x] **P0:** Test deployed app.
+- [x] **P0:** Confirm AI works in deployed app.
+- [x] **P0:** Confirm map loads in deployed app.
+- [x] **P0:** Keep local backup ready.
 
 ## 11.3 README
 
-- [ ] **P0:** Add project title.
-- [ ] **P0:** Add short description.
-- [ ] **P0:** Add problem statement.
-- [ ] **P0:** Add solution overview.
-- [ ] **P0:** Add tech stack.
-- [ ] **P0:** Add AI usage explanation.
-- [ ] **P0:** Add setup instructions.
-- [ ] **P0:** Add demo flow.
-- [ ] **P1:** Add screenshots.
-- [ ] **P1:** Add future scope.
+- [x] **P0:** Add project title.
+- [x] **P0:** Add short description.
+- [x] **P0:** Add problem statement.
+- [x] **P0:** Add solution overview.
+- [x] **P0:** Add tech stack.
+- [x] **P0:** Add AI usage explanation.
+- [x] **P0:** Add setup instructions.
+- [x] **P0:** Add demo flow.
+- [x] **P1:** Add screenshots.
+- [x] **P1:** Add future scope.
 
 ---
 
@@ -508,18 +508,18 @@ Local civic problems such as waterlogging, garbage piles, broken streetlights, o
 
 If there are only 2 hours, complete only this list:
 
-- [ ] Create app.
-- [ ] Add Tailwind.
-- [ ] Build landing page.
-- [ ] Build report form with text and location.
-- [ ] Build generated issue card.
-- [ ] Add AI text analysis or fallback generator.
-- [ ] Add save to LocalStorage.
-- [ ] Add map with demo issue pins.
-- [ ] Add copy complaint button.
-- [ ] Prepare waterlogging demo.
-- [ ] Test full flow once.
-- [ ] Prepare 1-minute pitch.
+- [x] Create app.
+- [x] Add Tailwind.
+- [x] Build landing page.
+- [x] Build report form with text and location.
+- [x] Build generated issue card.
+- [x] Add AI text analysis or fallback generator.
+- [x] Add save to LocalStorage.
+- [x] Add map with demo issue pins.
+- [x] Add copy complaint button.
+- [x] Prepare waterlogging demo.
+- [x] Test full flow once.
+- [x] Prepare 1-minute pitch.
 
 ---
 
@@ -527,14 +527,14 @@ If there are only 2 hours, complete only this list:
 
 The project is demo-ready when:
 
-- [ ] A user can open the app and understand the purpose in 10 seconds.
-- [ ] A user can enter a civic issue description and location.
-- [ ] The app can generate a structured civic report.
-- [ ] The report includes category, severity, summary, authority, and complaint message.
-- [ ] The user can save the report.
-- [ ] The saved report appears on a map.
-- [ ] The user can copy the complaint message.
-- [ ] The demo works even if the AI API fails.
+- [x] A user can open the app and understand the purpose in 10 seconds.
+- [x] A user can enter a civic issue description and location.
+- [x] The app can generate a structured civic report.
+- [x] The report includes category, severity, summary, authority, and complaint message.
+- [x] The user can save the report.
+- [x] The saved report appears on a map.
+- [x] The user can copy the complaint message.
+- [x] The demo works even if the AI API fails.
 
 ---
 
