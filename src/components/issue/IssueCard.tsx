@@ -2,9 +2,13 @@ import { useState } from "react";
 import {
   Building2,
   Check,
+  ChevronDown,
+  ChevronUp,
   ClipboardCopy,
   Download,
+  ExternalLink,
   HelpCircle,
+  Mail,
   MapPin,
   Save,
   Share2,
@@ -16,6 +20,10 @@ import { CategoryBadge } from "../badges/CategoryBadge";
 import { SeverityBadge } from "../badges/SeverityBadge";
 import { StatusBadge } from "../badges/StatusBadge";
 import { getSeverityMeta } from "../../data/severity";
+import { VerificationPanel } from "./VerificationPanel";
+import { EscalationTimeline } from "./EscalationTimeline";
+import { generateMailtoLink } from "../../lib/emailGenerator";
+import { findAuthoritiesForIssue } from "../../data/authorities";
 
 interface IssueCardProps {
   issue: CivicIssue;
@@ -30,7 +38,8 @@ interface IssueCardProps {
 /**
  * The full generated issue card shown on the report page after AI runs.
  *
- * Renders every AI-enrichment field plus copy/save/share affordances.
+ * Renders every AI-enrichment field plus copy/save/share affordances,
+ * email authority, portal links, verification, and escalation timeline.
  */
 export function IssueCard({
   issue,
@@ -40,10 +49,18 @@ export function IssueCard({
 }: IssueCardProps) {
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
   const severityMeta = getSeverityMeta(issue.severity);
 
   const whatsappText = buildWhatsappMessage(issue);
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+
+  // Find matching authorities for this issue
+  const authorities = findAuthoritiesForIssue(issue.category, issue.ward);
+  const primaryAuthority = authorities[0];
+  const mailtoLink = primaryAuthority
+    ? generateMailtoLink(issue, { to: primaryAuthority.contactEmail })
+    : generateMailtoLink(issue);
 
   async function handleCopy() {
     setCopyFailed(false);
@@ -70,6 +87,8 @@ export function IssueCard({
     URL.revokeObjectURL(url);
   }
 
+  const escalationEvents = issue.escalationHistory ?? [];
+
   return (
     <article className="parapulse-fade-up relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
       <div
@@ -81,6 +100,11 @@ export function IssueCard({
         <div className="flex items-center gap-2 text-xs font-medium text-emerald-700">
           <Sparkles className="h-3.5 w-3.5" aria-hidden />
           AI-generated civic report
+          {issue.language && issue.language !== "en" && (
+            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+              {issue.language === "bn" ? "বাংলা" : "हिन्दी"}
+            </span>
+          )}
         </div>
         <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
           {issue.title}
@@ -89,6 +113,11 @@ export function IssueCard({
           <CategoryBadge category={issue.category} />
           <SeverityBadge severity={issue.severity} />
           <StatusBadge status={issue.status} />
+          {issue.ward && (
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+              {issue.ward}
+            </span>
+          )}
         </div>
         <p className="flex items-start gap-1.5 text-sm text-slate-600">
           <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-400" aria-hidden />
@@ -114,6 +143,25 @@ export function IssueCard({
           icon={<Building2 className="h-4 w-4 text-slate-400" aria-hidden />}
         >
           {issue.suggestedAuthority}
+          {/* Portal links for matching authorities */}
+          {authorities.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {authorities.slice(0, 3).map((auth) => (
+                <a
+                  key={auth.id}
+                  href={auth.portalUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-[10px] font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700"
+                >
+                  <ExternalLink className="h-3 w-3" aria-hidden />
+                  {auth.department.length > 30
+                    ? auth.department.slice(0, 30) + "…"
+                    : auth.department}
+                </a>
+              ))}
+            </div>
+          )}
         </Section>
 
         <Section
@@ -171,6 +219,13 @@ export function IssueCard({
                 Share on WhatsApp
               </a>
             )}
+            <a
+              href={mailtoLink}
+              className="inline-flex items-center justify-center gap-1.5 rounded-md border border-sky-200 bg-white px-3 py-2 text-xs font-semibold text-sky-700 shadow-sm transition-colors hover:bg-sky-50 sm:py-1.5"
+            >
+              <Mail className="h-4 w-4" aria-hidden />
+              Email authority
+            </a>
             <button
               type="button"
               onClick={handleDownloadMarkdown}
@@ -193,6 +248,35 @@ export function IssueCard({
         >
           {issue.volunteerAction}
         </Section>
+
+        {/* ── Verification ── */}
+        <div className="border-t border-slate-100 pt-4">
+          <VerificationPanel
+            issueId={issue.id}
+            count={issue.verificationCount}
+          />
+        </div>
+
+        {/* ── Escalation Timeline ── */}
+        {escalationEvents.length > 0 && (
+          <div className="border-t border-slate-100 pt-4">
+            <button
+              type="button"
+              onClick={() => setShowTimeline((v) => !v)}
+              className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-700"
+            >
+              {showTimeline ? (
+                <ChevronUp className="h-3.5 w-3.5" aria-hidden />
+              ) : (
+                <ChevronDown className="h-3.5 w-3.5" aria-hidden />
+              )}
+              Escalation history ({escalationEvents.length})
+            </button>
+            {showTimeline && (
+              <EscalationTimeline events={escalationEvents} />
+            )}
+          </div>
+        )}
       </div>
 
       {onSave && (
@@ -275,6 +359,8 @@ function buildMarkdownReport(issue: CivicIssue) {
     `- **Location:** ${issue.location.text}`,
     `- **Suggested authority:** ${issue.suggestedAuthority}`,
     `- **Created:** ${new Date(issue.createdAt).toLocaleString()}`,
+    ...(issue.ward ? [`- **Ward:** ${issue.ward}`] : []),
+    ...(issue.language ? [`- **Language:** ${issue.language}`] : []),
     "",
     "## Summary",
     "",

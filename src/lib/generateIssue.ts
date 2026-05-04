@@ -3,7 +3,12 @@ import type {
   IssueCategory,
   IssueDraft,
   IssueSeverity,
+  ReportLanguage,
 } from "../types/issue";
+import { getLanguageConfig } from "./multilingual";
+import { waitForSlot } from "./rateLimiter";
+import { findAuthoritiesForIssue } from "../data/authorities";
+import { deriveWard } from "./analytics";
 
 /**
  * Local placeholder report generator.
@@ -180,7 +185,12 @@ function buildMissingInfo(category: IssueCategory): string[] {
   }
 }
 
-function buildPrompt(draft: IssueDraft): string {
+function buildPrompt(draft: IssueDraft, language: ReportLanguage = "en"): string {
+  const langConfig = getLanguageConfig(language);
+  const langInstruction = langConfig.promptInstruction
+    ? `\n\n${langConfig.promptInstruction}`
+    : "";
+
   return `You are ParaPulse's civic issue analyst for Kolkata civic reports.
 Analyze the user's civic issue description, location, and optional photo evidence.
 Classify the issue, estimate severity without exaggeration, write concise formal language, suggest the likely authority, list missing information, and suggest one volunteer next step.
@@ -192,7 +202,7 @@ Allowed severities: ${ISSUE_SEVERITIES.join(", ")}.
 
 User description: ${draft.description}
 Location: ${draft.location}
-Photo evidence: ${draft.imageData ? "Attached by the user." : "Not provided."}`;
+Photo evidence: ${draft.imageData ? "Attached by the user." : "Not provided."}${langInstruction}`;
 }
 
 function parseJsonObject(text: string): AIIssueJson {
@@ -274,11 +284,13 @@ function buildIssueFromAI(draft: IssueDraft, ai: AIIssueJson): CivicIssue {
   };
 }
 
-async function generateIssueWithGemini(draft: IssueDraft): Promise<CivicIssue> {
+async function generateIssueWithGemini(draft: IssueDraft, language: ReportLanguage = "en"): Promise<CivicIssue> {
   const apiKey = GEMINI_API_KEY.trim();
   if (!apiKey) throw new Error("Missing Gemini API key");
 
-  const parts: GeminiPart[] = [{ text: buildPrompt(draft) }];
+  await waitForSlot();
+
+  const parts: GeminiPart[] = [{ text: buildPrompt(draft, language) }];
   if (draft.imageData && draft.imageMimeType) {
     parts.push({
       inline_data: {
@@ -331,9 +343,17 @@ async function generateIssueWithGemini(draft: IssueDraft): Promise<CivicIssue> {
  * rules. Returns the same shape produced by the AI so the UI is identical
  * across both code paths.
  */
-export function generateIssueFromDraft(draft: IssueDraft): CivicIssue {
+export function generateIssueFromDraft(draft: IssueDraft, language?: ReportLanguage): CivicIssue {
   const rule = classify(`${draft.description} ${draft.location}`);
   const title = buildTitle(rule.category, draft.location);
+  const ward = deriveWard(draft.location);
+
+  // Try to find a more specific authority from the directory
+  const directoryAuthorities = findAuthoritiesForIssue(rule.category, ward);
+  const authority = directoryAuthorities.length > 0
+    ? directoryAuthorities[0].department
+    : rule.authority;
+
   return {
     id: `local-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
     title,
@@ -343,11 +363,14 @@ export function generateIssueFromDraft(draft: IssueDraft): CivicIssue {
     location: { text: draft.location.trim() || "Unspecified location" },
     createdAt: new Date().toISOString(),
     summary: buildSummary(draft.description, draft.location),
-    suggestedAuthority: rule.authority,
+    suggestedAuthority: authority,
     missingInfo: buildMissingInfo(rule.category),
     complaintMessage: buildComplaint(rule.category, draft.description, draft.location),
     volunteerAction: rule.volunteerAction,
     imageUrl: draft.imageUrl,
+    ward,
+    language: language ?? "en",
+    escalationHistory: [{ event: "Created", timestamp: new Date().toISOString() }],
   };
 }
 
@@ -355,11 +378,11 @@ export function generateIssueFromDraft(draft: IssueDraft): CivicIssue {
  * Mimic an async AI call so the form's loading state is exercised. The real
  * implementation in Phase 5 will replace this with a network request.
  */
-export async function generateIssueAsync(draft: IssueDraft): Promise<CivicIssue> {
+export async function generateIssueAsync(draft: IssueDraft, language: ReportLanguage = "en"): Promise<CivicIssue> {
   try {
-    return await generateIssueWithGemini(draft);
+    return await generateIssueWithGemini(draft, language);
   } catch (error) {
     console.warn("Gemini generation failed; using local fallback.", error);
-    return generateIssueFromDraft(draft);
+    return generateIssueFromDraft(draft, language);
   }
 }

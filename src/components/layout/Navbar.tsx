@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Radio, X } from "lucide-react";
+import { BarChart3, Building2, Menu, Radio, X } from "lucide-react";
 import { ROUTE_PATHS, type RouteKey } from "../../lib/router";
 
 interface NavLink {
@@ -10,6 +10,8 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { key: "report", label: "Report" },
   { key: "map", label: "Map" },
+  { key: "dashboard", label: "Dashboard" },
+  { key: "directory", label: "Directory" },
   { key: "landing", label: "Demo" },
 ];
 
@@ -46,12 +48,18 @@ export function Navbar({ current }: NavbarProps) {
               key={link.key}
               href={ROUTE_PATHS[link.key]}
               className={
-                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors " +
+                "inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors " +
                 (current === link.key
                   ? "bg-emerald-50 text-emerald-700"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900")
               }
             >
+              {link.key === "dashboard" && (
+                <BarChart3 className="h-3.5 w-3.5" aria-hidden />
+              )}
+              {link.key === "directory" && (
+                <Building2 className="h-3.5 w-3.5" aria-hidden />
+              )}
               {link.label}
             </a>
           ))}

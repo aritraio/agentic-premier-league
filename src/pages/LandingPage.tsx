@@ -1,8 +1,12 @@
 import {
   ArrowRight,
+  BarChart3,
+  Building2,
   Camera,
+  Languages,
   Map,
   Megaphone,
+  Mic,
   ShieldCheck,
   Sparkles,
   Users,
@@ -29,17 +33,40 @@ const STEPS = [
     icon: Megaphone,
     title: "Act",
     description:
-      "Copy the complaint, share it on WhatsApp, save it to the community map, and coordinate volunteers.",
+      "Copy the complaint, share it on WhatsApp, email the authority, and coordinate volunteers.",
   },
 ];
 
 const METRICS = [
   { label: "Civic categories supported", value: "8" },
-  { label: "Demo Kolkata locations", value: "5" },
-  { label: "Seconds to a structured report", value: "<10" },
+  { label: "Languages for reports", value: "3" },
+  { label: "Kolkata authorities listed", value: "14" },
 ];
 
-/** Public landing page: hero, how-it-works, demo issues, and CTAs. */
+const FEATURES = [
+  {
+    icon: Languages,
+    title: "Multilingual Reports",
+    description: "Generate reports in English, Bengali (বাংলা), or Hindi (हिन्दी).",
+  },
+  {
+    icon: Mic,
+    title: "Voice Input",
+    description: "Describe issues by speaking — supports EN, BN, HI voice recognition.",
+  },
+  {
+    icon: Building2,
+    title: "Authority Directory",
+    description: "Find the right department with contact info and portal links.",
+  },
+  {
+    icon: BarChart3,
+    title: "Analytics Dashboard",
+    description: "Ward-level stats, trends, duplicate detection, and resolution tracking.",
+  },
+];
+
+/** Public landing page: hero, how-it-works, features, demo issues, and CTAs. */
 export function LandingPage() {
   return (
     <div className="space-y-16 pb-16 sm:space-y-24">
@@ -160,6 +187,55 @@ export function LandingPage() {
             );
           })}
         </ol>
+      </section>
+
+      {/* ── New Features Showcase ── */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+            Beyond basic reporting
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Advanced tools for community-driven civic action.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={feature.title}
+                className="parapulse-hover-lift rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+                <h3 className="mt-3 text-sm font-semibold text-slate-900">
+                  {feature.title}
+                </h3>
+                <p className="mt-1 text-xs text-slate-600">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <a
+            href={ROUTE_PATHS.dashboard}
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50"
+          >
+            <BarChart3 className="h-4 w-4" aria-hidden />
+            Open Dashboard
+          </a>
+          <a
+            href={ROUTE_PATHS.directory}
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50"
+          >
+            <Building2 className="h-4 w-4" aria-hidden />
+            Authority Directory
+          </a>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">

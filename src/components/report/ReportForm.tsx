@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   AlertCircle,
   Eraser,
+  FileText,
   Image as ImageIcon,
   Loader2,
   MapPin,
@@ -9,11 +10,14 @@ import {
   Trash2,
   Wand2,
 } from "lucide-react";
-import type { IssueDraft } from "../../types/issue";
+import type { IssueDraft, ReportLanguage } from "../../types/issue";
+import { LANGUAGES } from "../../lib/multilingual";
+import { VoiceInput } from "./VoiceInput";
+import { extractTextFromImage } from "../../lib/ocrFromImage";
 
 interface ReportFormProps {
   /** Called when the user clicks Generate. */
-  onGenerate: (draft: IssueDraft) => void;
+  onGenerate: (draft: IssueDraft, language: ReportLanguage) => void;
   /** Loading state while AI is running. */
   loading: boolean;
   /** Optional error string surfaced from the AI call. */
@@ -64,6 +68,9 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
   const [imageMimeType, setImageMimeType] = useState<string | undefined>(undefined);
   const [imageError, setImageError] = useState<string | undefined>(undefined);
   const [imageReading, setImageReading] = useState(false);
+  const [language, setLanguage] = useState<ReportLanguage>("en");
+  const [ocrLoading, setOcrLoading] = useState(false);
+  const [ocrMessage, setOcrMessage] = useState<string | undefined>(undefined);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const canSubmit =
@@ -71,7 +78,8 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
     location.trim().length > 0 &&
     !loading &&
     !imageReading &&
-    !imageError;
+    !imageError &&
+    !ocrLoading;
 
   async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -79,6 +87,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
     setImageError(undefined);
     setImageData(undefined);
     setImageMimeType(undefined);
+    setOcrMessage(undefined);
     if (file.size > MAX_IMAGE_BYTES) {
       clearImage();
       setImageError("Please choose an image smaller than 4 MB.");
@@ -108,7 +117,29 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
     setImageMimeType(undefined);
     setImageError(undefined);
     setImageReading(false);
+    setOcrMessage(undefined);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  async function handleOcr() {
+    if (!imageData || !imageMimeType) return;
+    setOcrLoading(true);
+    setOcrMessage(undefined);
+    try {
+      const result = await extractTextFromImage(imageData, imageMimeType);
+      if (result.text) {
+        setDescription((prev) =>
+          prev ? `${prev}\n\n${result.text}` : result.text,
+        );
+        setOcrMessage("Text extracted and added to description.");
+      } else {
+        setOcrMessage(result.error || "No text found in the image.");
+      }
+    } catch {
+      setOcrMessage("Could not extract text from the image.");
+    } finally {
+      setOcrLoading(false);
+    }
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -116,13 +147,16 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
     if (!canSubmit) return;
     const persistedImageUrl =
       imageData && imageMimeType ? `data:${imageMimeType};base64,${imageData}` : imageUrl;
-    onGenerate({
-      description: description.trim(),
-      location: location.trim(),
-      imageUrl: persistedImageUrl,
-      imageData,
-      imageMimeType,
-    });
+    onGenerate(
+      {
+        description: description.trim(),
+        location: location.trim(),
+        imageUrl: persistedImageUrl,
+        imageData,
+        imageMimeType,
+      },
+      language,
+    );
   }
 
   function fillDemo() {
@@ -134,6 +168,7 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
     setDescription("");
     setLocation("");
     clearImage();
+    setOcrMessage(undefined);
   }
 
   return (
@@ -162,6 +197,13 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
           placeholder="e.g. After heavy rain the road near the bus stop is flooded and pedestrians cannot cross."
           className="mt-2 block min-h-36 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
         />
+        <div className="mt-2">
+          <VoiceInput
+            onTranscript={(text) =>
+              setDescription((prev) => (prev ? `${prev} ${text}` : text))
+            }
+          />
+        </div>
       </div>
 
       <div>
@@ -234,6 +276,32 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
             </div>
           )}
         </div>
+
+        {/* OCR extract button */}
+        {imageData && imageMimeType && (
+          <button
+            type="button"
+            onClick={handleOcr}
+            disabled={ocrLoading || loading}
+            className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50"
+          >
+            {ocrLoading ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+                Extracting text…
+              </>
+            ) : (
+              <>
+                <FileText className="h-3.5 w-3.5" aria-hidden />
+                Extract text from image
+              </>
+            )}
+          </button>
+        )}
+        {ocrMessage && (
+          <p className="mt-1.5 text-xs text-slate-600">{ocrMessage}</p>
+        )}
+
         {imageReading && (
           <p className="mt-2 text-xs text-slate-500">
             Preparing photo for AI analysis…
@@ -245,6 +313,32 @@ export function ReportForm({ onGenerate, loading, error }: ReportFormProps) {
             {imageError}
           </p>
         )}
+      </div>
+
+      {/* Language selector */}
+      <div>
+        <label
+          htmlFor="report-language"
+          className="block text-sm font-semibold text-slate-800"
+        >
+          Report language
+        </label>
+        <p className="mt-0.5 text-xs text-slate-500">
+          Choose the language for the generated report. Bengali and Hindi
+          require the AI API.
+        </p>
+        <select
+          id="report-language"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value as ReportLanguage)}
+          className="mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 sm:w-auto"
+        >
+          {LANGUAGES.map((lang) => (
+            <option key={lang.code} value={lang.code}>
+              {lang.nativeLabel} ({lang.label})
+            </option>
+          ))}
+        </select>
       </div>
 
       {error && (

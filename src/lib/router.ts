@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  * deployment work without server-side rewrites.
  */
 
-export type RouteKey = "landing" | "report" | "map";
+export type RouteKey = "landing" | "report" | "map" | "dashboard" | "directory";
 
 const HASH_TO_ROUTE: Record<string, RouteKey> = {
   "": "landing",
@@ -16,12 +16,16 @@ const HASH_TO_ROUTE: Record<string, RouteKey> = {
   "#/": "landing",
   "#/report": "report",
   "#/map": "map",
+  "#/dashboard": "dashboard",
+  "#/directory": "directory",
 };
 
 export const ROUTE_PATHS: Record<RouteKey, string> = {
   landing: "#/",
   report: "#/report",
   map: "#/map",
+  dashboard: "#/dashboard",
+  directory: "#/directory",
 };
 
 /** Resolve the current hash to a known route, defaulting to `landing`. */

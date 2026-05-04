@@ -4,7 +4,7 @@ import { ReportForm } from "../components/report/ReportForm";
 import { IssueCard } from "../components/issue/IssueCard";
 import { generateIssueAsync } from "../lib/generateIssue";
 import { navigate } from "../lib/router";
-import type { CivicIssue, IssueDraft } from "../types/issue";
+import type { CivicIssue, IssueDraft, ReportLanguage } from "../types/issue";
 
 interface ReportPageProps {
   /** Persists a generated issue so it shows up on the map. */
@@ -25,14 +25,14 @@ export function ReportPage({ onSaveIssue }: ReportPageProps) {
   const [savedId, setSavedId] = useState<string | undefined>(undefined);
   const [saveToastVisible, setSaveToastVisible] = useState(false);
 
-  async function handleGenerate(draft: IssueDraft) {
+  async function handleGenerate(draft: IssueDraft, language: ReportLanguage = "en") {
     setLoading(true);
     setError(undefined);
     setIssue(undefined);
     setSavedId(undefined);
     setSaveToastVisible(false);
     try {
-      const result = await generateIssueAsync(draft);
+      const result = await generateIssueAsync(draft, language);
       setIssue(result);
     } catch (err) {
       console.error(err);

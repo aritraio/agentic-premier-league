@@ -56,6 +56,15 @@ export interface IssueAIFields {
   volunteerAction: string;
 }
 
+/** Supported output languages for AI-generated reports. */
+export type ReportLanguage = "en" | "bn" | "hi";
+
+/** A timestamped event in the escalation lifecycle of an issue. */
+export interface EscalationEvent {
+  event: string;
+  timestamp: string;
+}
+
 /**
  * A complete civic issue record, including user input, AI enrichment,
  * and demo/storage metadata.
@@ -71,6 +80,19 @@ export interface CivicIssue extends IssueAIFields {
   createdAt: string;
   /** Optional image URL or local object URL used as evidence. */
   imageUrl?: string;
+
+  /* ── Phase 12 extensions (all optional for backward compat) ── */
+
+  /** Number of anonymous "I've seen this too" confirmations. */
+  verificationCount?: number;
+  /** Kolkata ward identifier derived from location (e.g. "Ward 68"). */
+  ward?: string;
+  /** ID of another issue this is considered a duplicate of. */
+  duplicateOfId?: string;
+  /** Language the AI report was generated in. */
+  language?: ReportLanguage;
+  /** Ordered list of escalation events for the timeline display. */
+  escalationHistory?: EscalationEvent[];
 }
 
 /**
